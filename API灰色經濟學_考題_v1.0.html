@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <title>API灰色經濟學_互動測驗</title>
+    <style>
+        body { font-family: "Microsoft JhengHei", Arial, sans-serif; background: #fafafa; color: #222; }
+        h1, h2 { color: #2c3e50; }
+        .section { margin-bottom: 2em; }
+        .question, .tf-question { margin: 1em 0; }
+        .choices { margin-left: 2em; }
+        .result { font-weight: bold; color: #2980b9; }
+        .inline-result { margin-left: 1em; font-weight: bold; }
+        .correct { color: #27ae60; }
+        .wrong { color: #c0392b; }
+        button { margin-top: 1em; }
+    </style>
+</head>
+<body>
+    <h1>API灰色經濟學_互動測驗</h1>
+    <form id="quizForm">
+        <div class="section">
+            <h2>是非題 (True/False Questions)</h2>
+            <!-- 是非題 1~10 -->
+            <div class="tf-question">
+                1. Starlink 提供衛星網路服務，可於網路服務不可靠、費用昂貴或完全沒有網路的位置提供高速網際網路服務。<br>
+                <label><input type="radio" name="tf1" value="T"> 正確</label>
+                <label><input type="radio" name="tf1" value="F"> 錯誤</label>
+                <span id="tf1-result" class="inline-result"></span>
+            </div>
+            <div class="tf-question">
+                2. API，全名為Application Programming Interface（應用程式介面），是一組定義和協議，用於構建和整合應用程式軟體。它允許不同的系統與服務之間進行資料交換。<br>
+                <label><input type="radio" name="tf2" value="T"> 正確</label>
+                <label><input type="radio" name="tf2" value="F"> 錯誤</label>
+                <span id="tf2-result" class="inline-result"></span>
+            </div>
+            <div class="tf-question">
+                3. 手機使用App 透過 API 與後端服務互動。<br>
+                <label><input type="radio" name="tf3" value="T"> 正確</label>
+                <label><input type="radio" name="tf3" value="F"> 錯誤</label>
+                <span id="tf3-result" class="inline-result"></span>
+            </div>
+            <div class="tf-question">
+                4. AI 透過 API訓練資料蒐集、模型部署、模型推論。<br>
+                <label><input type="radio" name="tf4" value="T"> 正確</label>
+                <label><input type="radio" name="tf4" value="F"> 錯誤</label>
+                <span id="tf4-result" class="inline-result"></span>
+            </div>
+            <div class="tf-question">
+                5. 與API相關的常見灰色應用，關於社交工程有:郵件、LINE、FB…等。<br>
+                <label><input type="radio" name="tf5" value="T"> 正確</label>
+                <label><input type="radio" name="tf5" value="F"> 錯誤</label>
+                <span id="tf5-result" class="inline-result"></span>
+            </div>
+            <div class="tf-question">
+                6. 現代化系統架構，採用API方式開發、微服務架構、雲原生設計、自動化運維。<br>
+                <label><input type="radio" name="tf6" value="T"> 正確</label>
+                <label><input type="radio" name="tf6" value="F"> 錯誤</label>
+                <span id="tf6-result" class="inline-result"></span>
+            </div>
+            <div class="tf-question">
+                7. 灰色應用之現代化系統架構，採用API方式開發、微服務架構、雲原生設計、自動化運維。<br>
+                <label><input type="radio" name="tf7" value="T"> 正確</label>
+                <label><input type="radio" name="tf7" value="F"> 錯誤</label>
+                <span id="tf7-result" class="inline-result"></span>
+            </div>
+            <div class="tf-question">
+                8. 傳統詐騙擴展能力低，必須靠人力堆疊；API 詐騙則可高度擴容，進行全球部署，24 小時在線運作，並具備秒級執行能力。<br>
+                <label><input type="radio" name="tf8" value="T"> 正確</label>
+                <label><input type="radio" name="tf8" value="F"> 錯誤</label>
+                <span id="tf8-result" class="inline-result"></span>
+            </div>
+            <div class="tf-question">
+                9. 2026年4月1日，全台爆發大規模 LINE 帳號盜用事件，其根本原因為部分電信業者語音信箱服務存在安全漏洞，包含預設啟用及未變更預設密碼。<br>
+                <label><input type="radio" name="tf9" value="T"> 正確</label>
+                <label><input type="radio" name="tf9" value="F"> 錯誤</label>
+                <span id="tf9-result" class="inline-result"></span>
+            </div>
+            <div class="tf-question">
+                10. 若不確定網址是否合法，可透過 ChatGPT、Gemini 等 AI 工具協助初步判斷，並搭配官方網站或資安管道進行確認。<br>
+                <label><input type="radio" name="tf10" value="T"> 正確</label>
+                <label><input type="radio" name="tf10" value="F"> 錯誤</label>
+                <span id="tf10-result" class="inline-result"></span>
+            </div>
+        </div>
+
+       <!-- 選擇題區塊調整，將 <span id="mcX-result"> 從選項下方移到題目句尾，並加 <br> -->
+<div class="section">
+    <h2>選擇題 (Multiple Choice Questions)</h2>
+    <!-- 選擇題 1~10 -->
+    <div class="question">
+        1. 下列何者最能說明常見雲端服務與 API 之間的關係？<span id="mc1-result" class="inline-result"></span><br>
+        <label><input type="radio" name="mc1" value="A"> (A) 雲端服務僅提供硬體資源，與 API 無直接關聯</label><br>
+        <label><input type="radio" name="mc1" value="B"> (B) 雲端服務與 API 之間的關係，雲端服務提供 API 平台，供不同系統與服務進行整合</label><br>
+        <label><input type="radio" name="mc1" value="C"> (C) API 僅用於本地端系統，無法應用於雲端服務</label><br>
+        <label><input type="radio" name="mc1" value="D"> (D) 雲端服務主要透過人工方式進行資料交換，較少使用 API</label>
+    </div>
+    <div class="question">
+        2. 社交工程郵件結合 API 所常見之詐騙行為？<span id="mc2-result" class="inline-result"></span><br>
+        <label><input type="radio" name="mc2" value="A"> (A) 誘導使用者開啟附件，直接破壞電腦硬體</label><br>
+        <label><input type="radio" name="mc2" value="B"> (B) API 所常見之詐騙行為，誘導使用者點擊連結，並透過 API 即時將帳號密碼回傳給攻擊者</label><br>
+        <label><input type="radio" name="mc2" value="C"> (C) 利用筆記手寫逐一蒐集帳密資訊</label><br>
+        <label><input type="radio" name="mc2" value="D"> (D) 強迫使用者至合法網站進行系統更新</label>
+    </div>
+    <div class="question">
+        3. 下列關於「視訊 AI 詐騙」的敘述，何者正確？<span id="mc3-result" class="inline-result"></span><br>
+        <label><input type="radio" name="mc3" value="A"> (A) 視訊 AI 詐騙僅能透過靜態照片進行，無法即時互動</label><br>
+        <label><input type="radio" name="mc3" value="B"> (B) 「視訊 AI 詐騙」的敘述，不法分子利用變臉（Deepfake）技術，假冒特定對象進行視訊詐騙</label><br>
+        <label><input type="radio" name="mc3" value="C"> (C) 視訊 AI 詐騙僅影響國內用戶，與海外華僑無關</label><br>
+        <label><input type="radio" name="mc3" value="D"> (D) 只要開啟視訊鏡頭，即可立即辨識是否為 AI 詐騙</label>
+    </div>
+    <div class="question">
+        4. 為避免 LINE 帳號遭盜用，下列哪一項做法最為正確？<span id="mc4-result" class="inline-result"></span><br>
+        <label><input type="radio" name="mc4" value="A"> (A) 掃描任何 QR Code 以加好友，增加聯絡便利性</label><br>
+        <label><input type="radio" name="mc4" value="B"> (B) 為避免 LINE 帳號遭盜用，避免掃描來路不明的 QR Code，並確認加好友來源</label><br>
+        <label><input type="radio" name="mc4" value="C"> (C) 關閉 LINE 的雙重驗證功能</label><br>
+        <label><input type="radio" name="mc4" value="D"> (D) 將帳號驗證碼提供給他人協助登入</label>
+    </div>
+    <div class="question">
+        5. 關於「API 詐騙」的特性，下列何者敘述正確？<span id="mc5-result" class="inline-result"></span><br>
+        <label><input type="radio" name="mc5" value="A"> (A) 主要依賴人工操作逐一詐騙，系統架構單一，無法快速擴展</label><br>
+        <label><input type="radio" name="mc5" value="B"> (B) 關於「API 詐騙」的特性，採用 API 驅動開發與模組化設計，自動化詐騙流程，具備全球部署與快速復原能力</label><br>
+        <label><input type="radio" name="mc5" value="C"> (C) 僅以大量寄送訊息為主，無需金流整合與系統監控</label><br>
+        <label><input type="radio" name="mc5" value="D"> (D) 詐騙成效主要取決於人員話術能力，與系統效能無關</label>
+    </div>
+    <div class="question">
+        6. 關於仿冒購物網站結合API造成的詐騙風險，下列敘述何者正確？<span id="mc6-result" class="inline-result"></span><br>
+        <label><input type="radio" name="mc6" value="A"> (A) 仿冒購物網站頂多沒收到商品，與系統或 API 無關</label><br>
+        <label><input type="radio" name="mc6" value="B"> (B) 關於仿冒購物網站結合API造成的詐騙風險，透過 API 即時回傳使用者輸入的付款與個資，可能導致金錢損失及個資外洩</label><br>
+        <label><input type="radio" name="mc6" value="C"> (C) 消費流程完全由人工處理，不會即時傳送資料</label><br>
+        <label><input type="radio" name="mc6" value="D"> (D) 個資僅儲存在網站本地，不會被轉售或濫用</label>
+    </div>
+    <div class="question">
+        7. 關於 QR Code 詐騙的常見手法，下列敘述何者正確？<span id="mc7-result" class="inline-result"></span><br>
+        <label><input type="radio" name="mc7" value="A"> (A) QR Code 僅能用於付款用途，不可能被用於詐騙</label><br>
+        <label><input type="radio" name="mc7" value="B"> (B) 關於 QR Code 詐騙的常見手法，偽裝成付款、活動登錄或優惠券的 QR Code，掃描後可能導向釣魚網站或下載惡意 App</label><br>
+        <label><input type="radio" name="mc7" value="C"> (C) 只要 QR Code 顯示於實體場所，即可判定為安全</label><br>
+        <label><input type="radio" name="mc7" value="D"> (D) 掃描 QR Code 不會涉及個資或資安風險</label>
+    </div>
+    <div class="question">
+        8. 關於公共 Wi‑Fi 與 API 所可能帶來的資安風險，下列哪一項做法最為正確？<span id="mc8-result" class="inline-result"></span><br>
+        <label><input type="radio" name="mc8" value="A"> (A) 可在公共 Wi‑Fi 環境下登入銀行或付款網站，API 傳輸皆具備完整保護</label><br>
+        <label><input type="radio" name="mc8" value="B"> (B) 在公共 Wi‑Fi 下登入銀行或進行付款，可能被攔截 API 傳輸資料，增加帳密與金流外洩風險</label><br>
+        <label><input type="radio" name="mc8" value="C"> (C) 只要網站有 HTTPS，加上 API 即可完全避免資料外洩</label><br>
+        <label><input type="radio" name="mc8" value="D"> (D) API 僅用於系統間整合，不會在公共 Wi‑Fi 環境中被利用</label>
+    </div>
+    <div class="question">
+        9. 關於 API 詐騙防範措施，下列敘述何者正確？<span id="mc9-result" class="inline-result"></span><br>
+        <label><input type="radio" name="mc9" value="A"> (A) API 攻擊僅影響系統，不會造成帳號被盜</label><br>
+        <label><input type="radio" name="mc9" value="B"> (B) 即使帳密外洩，啟用雙重驗證可有效降低 API 自動化登入成功率</label><br>
+        <label><input type="radio" name="mc9" value="C"> (C) 雙重驗證僅適用於內部系統，對外部服務無效</label><br>
+        <label><input type="radio" name="mc9" value="D"> (D) API 無法用於帳號登入流程</label>
+    </div>
+    <div class="question">
+        10. 當不確定網址是否合法時，下列哪一項做法最為正確？<span id="mc10-result" class="inline-result"></span><br>
+        <label><input type="radio" name="mc10" value="A"> (A) 只要網址可正常開啟，即可判定為安全</label><br>
+        <label><input type="radio" name="mc10" value="B"> (B) 可透過 ChatGPT、Gemini 等 AI 工具進行初步判斷，並搭配官方網站或資安管道進一步確認</label><br>
+        <label><input type="radio" name="mc10" value="C"> (C) 將網址轉傳給朋友如果可以開啟，即可判定為安全</label><br>
+        <label><input type="radio" name="mc10" value="D"> (D) 只要不是銀行網站，就不需要特別確認</label>
+    </div>
+</div>
+    </form>
+    <div id="result" class="result"></div>
+    <script>
+        // 正確答案
+        const answers = {
+            tf1: "T", tf2: "T", tf3: "T", tf4: "T", tf5: "T",
+            tf6: "T", tf7: "T", tf8: "T", tf9: "T", tf10: "T",
+            mc1: "B", mc2: "B", mc3: "B", mc4: "B", mc5: "B",
+            mc6: "B", mc7: "B", mc8: "B", mc9: "B", mc10: "B"
+        };
+
+        // 為所有選項加上事件監聽
+        document.querySelectorAll('input[type=radio]').forEach(function(radio) {
+            radio.addEventListener('change', function(e) {
+                const name = e.target.name;
+                const value = e.target.value;
+                const resultSpan = document.getElementById(name + '-result');
+                if (!resultSpan) return;
+                if (answers[name] === value) {
+                    resultSpan.textContent = '✔ 正確';
+                    resultSpan.className = 'inline-result correct';
+                } else {
+                    resultSpan.textContent = '✘ 錯誤';
+                    resultSpan.className = 'inline-result wrong';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
