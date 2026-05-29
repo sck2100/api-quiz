@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>API防詐觀察_互動測驗</title>
+    <style>
+        body { 
+            font-family: "Microsoft JhengHei", Arial, sans-serif; 
+            background: #f4f7f6; 
+            color: #333; 
+            margin: 0;
+            padding: 15px;
+            line-height: 1.6;
+        }
+        h1 { 
+            color: #2c3e50; 
+            font-size: 1.5rem;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        h2 { 
+            color: #2980b9; 
+            font-size: 1.25rem;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 8px;
+            margin-top: 30px;
+        }
+        .section { margin-bottom: 2em; }
+        
+        .question, .tf-question { 
+            background: #ffffff;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .question-text {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #2c3e50;
+            display: block;
+        }
+
+        label {
+            display: block;
+            background: #fafafa;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s, border-color 0.2s;
+            font-size: 0.95rem;
+        }
+        label:active { 
+            background: #e8f4f8; 
+            border-color: #3498db;
+        }
+        input[type="radio"] {
+            margin-right: 10px;
+            transform: scale(1.2);
+        }
+        
+        .result { font-weight: bold; color: #2980b9; text-align: center; margin-top: 20px; }
+        .inline-result { 
+            display: block;
+            margin-top: 10px; 
+            font-weight: bold; 
+            font-size: 1.1rem;
+        }
+        .correct { color: #27ae60; }
+        .wrong { color: #c0392b; }
+
+        .recommendations {
+            background: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 40px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            border-top: 5px solid #e67e22;
+        }
+        .recommendations h2 {
+            color: #d35400;
+            border-bottom: none;
+            text-align: center;
+            margin-top: 0;
+            padding-bottom: 0;
+        }
+        .rec-item {
+            margin-top: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px dashed #ccc;
+        }
+        .rec-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+        .rec-title {
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        .rec-desc {
+            font-size: 0.95rem;
+            color: #555;
+            margin-bottom: 15px;
+        }
+        .rec-btn {
+            display: block;
+            width: 100%;
+            background: #e67e22;
+            color: #fff;
+            text-align: center;
+            padding: 12px 0;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1rem;
+            box-sizing: border-box;
+            transition: background 0.3s;
+        }
+        .rec-btn:active {
+            background: #d35400;
+        }
+    </style>
+</head>
+<body>
+    <h1>API灰色經濟學_互動測驗</h1>
+    <form id="quizForm">
+        <div class="section">
+            <h2>是非題 (True/False Questions)</h2>
+            <div class="tf-question">
+                <span class="question-text">1. API，全名為Application Programming Interface（應用程式介面），是一組定義和協議，用於構建和整合應用程式軟體。它允許不同的系統與服務之間進行資料交換。</span>
+                <label><input type="radio" name="tf1" value="T"> 正確</label>
+                <label><input type="radio" name="tf1" value="F"> 錯誤</label>
+                <span id="tf1-result" class="inline-result"></span>
+            </div>
+            <div class="tf-question">
+                <span class="question-text">2.常見的 API 資料交換格式為 JSON。</span>
+                <label><input type="radio" name="tf2" value="T"> 正確</label>
+                <label><input type="radio" name="tf2" value="F"> 錯誤</label>
+                <span id="tf2-result" class="inline-result"></span>
+            </div>
+            <div class="tf-question">
+                <span class="question-text">3. 這是常見的 JSON 資料格式 { "name": "Tom" }。</span>
+                <label><input type="radio" name="tf3" value="T"> 正確</label>
+                <label><input type="radio" name="tf3" value="F"> 錯誤</label>
+                <span id="tf3-result" class="inline-result"></span>
+            </div>
+            <div class="tf-question">
+                <span class="question-text">4. API 通常透過 HTTPS 提供通道層安全。</span>
+                <label><input type="radio" name="tf4" value="T"> 正確</label>
+                <label><input type="radio" name="tf4" value="F"> 錯誤</label>
+                <span id="tf4-result" class="inline-result"></span>
+            </div>
+            <div class="tf-question">
+                <span class="question-text">5. 收到寄件者為台電的電費的電子帳單，寄件者名稱仍可被偽造 。</span>
+                <label><input type="radio" name="tf5" value="T"> 正確</label>
+                <label><input type="radio" name="tf5" value="F"> 錯誤</label>
+                <span id="tf5-result" class="inline-result"></span>
+            </div>
+            <div class="tf-question">
+                <span class="question-text">6. 若翻拍並提供台灣 PAY QR Code 付款碼，可能造成使用者以自己帳戶替他人付款。</span>
+                <label><input type="radio" name="tf6" value="T"> 正確</label>
+                <label><input type="radio" name="tf6" value="F"> 錯誤</label>
+                <span id="tf6-result" class="inline-result"></span>
+            </div>
+            <div class="tf-question">
+                <span class="question-text">7. 在價格便宜、來路不明的購物網站輸入信用卡卡號，有可能導致信用卡被盜刷。</span>
+                <label><input type="radio" name="tf7" value="T"> 正確</label>
+                <label><input type="radio" name="tf7" value="F"> 錯誤</label>
+                <span id="tf7-result" class="inline-result"></span>
+            </div>
+            <div class="tf-question">
+                <span class="question-text">8. 將網路銀行帳號、密碼交給他人，並再提供詐騙集團收到的簡訊驗證碼，不只會影響網路銀行被盜用，相關綁定之電子支付（如 LINE Pay、街口支付等）也可能一併被盜用。</span>
+                <label><input type="radio" name="tf8" value="T"> 正確</label>
+                <label><input type="radio" name="tf8" value="F"> 錯誤</label>
+                <span id="tf8-result" class="inline-result"></span>
+            </div>
+            <div class="tf-question">
+                <span class="question-text">9. 客戶來電表示網路銀行帳號遭盜用時，實際影響範圍「有可能不只限於網路銀行」，亦可能波及其他已綁定之金融或電子支付服務。</span>
+                <label><input type="radio" name="tf9" value="T"> 正確</label>
+                <label><input type="radio" name="tf9" value="F"> 錯誤</label>
+                <span id="tf9-result" class="inline-result"></span>
+            </div>
+            <div class="tf-question">
+                <span class="question-text">10. 客戶來電表示網路銀行帳號遭盜用時，有可能其信用卡已一併遭到詐騙，惟客戶尚未察覺。</span>
+                <label><input type="radio" name="tf10" value="T"> 正確</label>
+                <label><input type="radio" name="tf10" value="F"> 錯誤</label>
+                <span id="tf10-result" class="inline-result"></span>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>選擇題 (Multiple Choice Questions)</h2>
+            <div class="question">
+                <span class="question-text">1.  下列何者為發送電子帳單時，主要使用的傳送管道？</span>
+                <label><input type="radio" name="mc1" value="A"> (A) 簡訊平台</label>
+                <label><input type="radio" name="mc1" value="B"> (B) 主要使用的傳送管道，電子郵件主機</label>
+                <label><input type="radio" name="mc1" value="C"> (C) 社群媒體私訊</label>
+                <label><input type="radio" name="mc1" value="D"> (D) 電話語音系統</label>
+                <span id="mc1-result" class="inline-result"></span>
+            </div>
+            <div class="question">
+                <span class="question-text">2. 電子郵件主機在發送電子郵件時，通常是透過下列哪一種方式進行？</span>
+                <label><input type="radio" name="mc2" value="A"> (A) 以Webhook方式由郵件主機主動接收郵件內容</label>
+                <label><input type="radio" name="mc2" value="B"> (B) 電子郵件主機在發送電子郵件時，通常是透過API 呼叫</label>
+                <label><input type="radio" name="mc2" value="C"> (C) Database同步</label>
+                <label><input type="radio" name="mc2" value="D"> (D) 簡訊閘道</label>
+                <span id="mc2-result" class="inline-result"></span>
+            </div>
+            <div class="question">
+                <span class="question-text">3. 一般電子支付（如 LINE Pay、街口支付）在綁定銀行帳戶時，通常需要透過下列哪一項進行身分驗證？</span>
+                <label><input type="radio" name="mc3" value="A"> (A) 信用卡卡號與有效期限</label>
+                <label><input type="radio" name="mc3" value="B"> (B) 通常需要透過網路銀行帳號及密碼進行身分驗證</label>
+                <label><input type="radio" name="mc3" value="C"> (C) 電子郵件帳號</label>
+                <label><input type="radio" name="mc3" value="D"> (D) 社群平台帳號</label>
+                <span id="mc3-result" class="inline-result"></span>
+            </div>
+            <div class="question">
+                <span class="question-text">4. 使用台灣Pay QR Code 進行銀行帳戶付款，交易完成後款項通常如何處理？</span>
+                <label><input type="radio" name="mc4" value="A"> (A) 先記入電子支付餘額，之後再定期扣款</label>
+                <label><input type="radio" name="mc4" value="B"> (B) 使用台灣Pay QR Code 進行銀行帳戶付款完成後，直接透過API自銀行帳戶扣款</label>
+                <label><input type="radio" name="mc4" value="C"> (C) 由信用卡代墊，月底再向銀行請款</label>
+                <label><input type="radio" name="mc4" value="D"> (D) 需人工至銀行櫃檯確認後始能扣款</label>
+                <span id="mc4-result" class="inline-result"></span>
+            </div>
+            <div class="question">
+                <span class="question-text">5. 銀行帳戶在進行交易時，常見可設定或管控的交易限額包含下列哪幾種類型？</span>
+                <label><input type="radio" name="mc5" value="A"> (A) 每筆交易限額</label>
+                <label><input type="radio" name="mc5" value="B"> (B) 每日交易限額</label>
+                <label><input type="radio" name="mc5" value="C"> (C) 每月交易限額</label>
+                <label><input type="radio" name="mc5" value="D"> (D) 以上皆是</label>
+                <span id="mc5-result" class="inline-result"></span>
+            </div>
+            <div class="question">
+                <span class="question-text">6. 有關銀行帳戶交易限額之相關資訊，下列何者為正確的查詢管道？</span>
+                <label><input type="radio" name="mc6" value="A"> (A) 僅能向客服電話詢問</label>
+                <label><input type="radio" name="mc6" value="B"> (B) 有關銀行帳戶交易限額之相關資訊，可至 NOTES 行員手冊與官方網站查詢</label>
+                <label><input type="radio" name="mc6" value="C"> (C) 僅能由分行臨櫃提供</label>
+                <label><input type="radio" name="mc6" value="D"> (D) 僅能由電子支付業者公告</label>
+                <span id="mc6-result" class="inline-result"></span>
+            </div>
+            <div class="question">
+                <span class="question-text">7. 關於流程 API 化之特性，下列何者為詐騙集團可能利用的風險點？</span>
+                <label><input type="radio" name="mc7" value="A"> (A) 每筆操作成本高，需大量人工介入</label>
+                <label><input type="radio" name="mc7" value="B"> (B) 關於流程 API 化之特性，單筆詐騙成本低，且可自動化大量操作</label>
+                <label><input type="radio" name="mc7" value="C"> (C) 所有交易皆需人工審核，難以規模化</label>
+                <label><input type="radio" name="mc7" value="D"> (D) 僅能於營業時間內進行交易</label>
+                <span id="mc7-result" class="inline-result"></span>
+            </div>
+            <div class="question">
+                <span class="question-text">8. 關於流程 API 化後可能衍生的詐騙風險，下列何者為正確敘述？</span>
+                <label><input type="radio" name="mc8" value="A"> (A) 詐騙行為難以重複進行，通常僅限單筆事件</label>
+                <label><input type="radio" name="mc8" value="B"> (B) 關於流程 API 化後可能衍生的詐騙風險，容易形成批量、重複且系統化的詐騙行為，放大詐騙規模</label>
+                <label><input type="radio" name="mc8" value="C"> (C) 所有 API 操作皆需人工即時審核，無法被自動化利用</label>
+                <label><input type="radio" name="mc8" value="D"> (D) 因需大量人工操作，詐騙規模不易擴大</label>
+                <span id="mc8-result" class="inline-result"></span>
+            </div>
+            <div class="question">
+                <span class="question-text">9. 將網路銀行帳號、密碼交給他人，並再提供詐騙集團取得的簡訊驗證碼，可能造成下列何種影響？</span>
+                <label><input type="radio" name="mc9" value="A"> (A) 僅會影響網路銀行登入功能，其他服務不受影響</label>
+                <label><input type="radio" name="mc9" value="B"> (B) 將網路銀行帳號、密碼交給他人，不僅可能導致網路銀行被盜用，相關綁定之電子支付（如 LINE Pay、街口支付等）也可能一併被盜用</label>
+                <label><input type="radio" name="mc9" value="C"> (C) 只會影響網路銀行，不會影響電子支付</label>
+                <label><input type="radio" name="mc9" value="D"> (D) 只要未提供信用卡資料，即不會產生任何風險</label>
+                <span id="mc9-result" class="inline-result"></span>
+            </div>
+            <div class="question">
+                <span class="question-text">10. 客戶來電表示網路銀行帳號遭盜用時，可能會發生下列何種情況？</span>
+                <label><input type="radio" name="mc10" value="A"> (A) 僅網路銀行功能受影響，信用卡一定不會有問題</label>
+                <label><input type="radio" name="mc10" value="B"> (B) 客戶來電表示網路銀行帳號遭盜用時，信用卡可能已一併遭到詐騙，但客戶尚未察覺</label>
+                <label><input type="radio" name="mc10" value="C"> (C) 只要未主動提出申請，信用卡就不會被盜用</label>
+                <label><input type="radio" name="mc10" value="D"> (D) 信用卡是否遭詐騙需等帳單寄送後才能確認</label>
+                <span id="mc10-result" class="inline-result"></span>
+            </div>
+        </div>
+    </form>
+    
+    <div class="recommendations">
+        <h2>✨ 朋友Wilson用AI做的網頁推薦</h2>
+        
+        <div class="rec-item">
+            <div class="rec-title">1. 親子互動獎勵系統</div>
+            <div class="rec-desc">
+                用 Gemini 做了一個給兒子用的系統！包含獎勵點數（例如做家事或考滿分等）、抽卡（抽爸爸媽媽的獎勵，可以客製化自己設定）、銀行活存或定存點數（越存會越生越多點）。<br><br>
+                可以讓小孩玩看看，我現在都靠這個控制我兒子（可以不用註冊）。
+            </div>
+            <a href="https://suenz001.github.io/publicdraw/" target="_blank" class="rec-btn">前往系統</a>
+        </div>
+
+        <div class="rec-item">
+            <div class="rec-title">2. 英文小遊戲</div>
+            <div class="rec-desc">
+                輕鬆有趣的英文單字小遊戲，適合在空閒時間練習。
+            </div>
+            <a href="https://suenz001.github.io/English-Game/index.html" target="_blank" class="rec-btn">開始遊戲</a>
+        </div>
+
+        <div class="rec-item">
+            <div class="rec-title">3. PTCG 繁中網頁版對戰模擬器</div>
+            <div class="rec-desc">
+                大師球聯盟賽抽籤公布了！推薦這個模擬器幫助大家做牌組演練：<br>
+                ✅ 全自動規則判定：跟 PTCG Live 一樣自帶系統判定，告別手動操作！<br>
+                ✅ 對戰模式超齊全：可連線對戰、打 AI 電腦，也能自己左手打右手測試。<br>
+                ✅ 查卡片超方便：支援現行 H / I / J 標，連效果內文都能直接搜尋！<br><br>
+                此為玩家自製網站，完全免費，支援手機版，網頁開啟就能玩，大家趕快趁賽前來測試看看，有任何建議再麻煩回饋給我！
+            </div>
+            <a href="https://suenz001.github.io/ptcg-tw-sim/" target="_blank" class="rec-btn">開啟模擬器</a>
+        </div>
+    </div>
+
+    <script>
+        // 正確答案
+        const answers = {
+            tf1: "T", tf2: "T", tf3: "T", tf4: "T", tf5: "T",
+            tf6: "T", tf7: "T", tf8: "T", tf9: "T", tf10: "T",
+            mc1: "B", mc2: "B", mc3: "B", mc4: "B", mc5: "D",
+            mc6: "B", mc7: "B", mc8: "B", mc9: "B", mc10: "B"
+        };
+
+        document.querySelectorAll('input[type=radio]').forEach(function(radio) {
+            radio.addEventListener('change', function(e) {
+                const name = e.target.name;
+                const value = e.target.value;
+                const resultSpan = document.getElementById(name + '-result');
+                if (!resultSpan) return;
+                if (answers[name] === value) {
+                    resultSpan.textContent = '✔ 正確';
+                    resultSpan.className = 'inline-result correct';
+                } else {
+                    resultSpan.textContent = '✘ 錯誤';
+                    resultSpan.className = 'inline-result wrong';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
