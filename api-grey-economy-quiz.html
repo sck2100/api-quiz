@@ -129,8 +129,142 @@
             background: #d35400;
         }
     </style>
+
+    <style>
+        [hidden] { display: none !important; }
+        #experience { max-width: 560px; margin: 28px auto; font-family: "Microsoft JhengHei", Arial, sans-serif; }
+        #experience * { box-sizing: border-box; }
+        #experience .eyebrow { color: #526878; font-size: .8rem; font-weight: bold; letter-spacing: .12em; }
+        #experience .panel { background: #fff; border: 1px solid #dce7e3; border-radius: 24px; padding: 28px 24px; box-shadow: 0 14px 40px #163b2810; }
+        #experience h1 { text-align: left; font-size: 1.9rem; line-height: 1.35; margin: 12px 0; color: #173f34; }
+        #experience h2 { border: 0; padding: 0; margin: 22px 0 8px; color: #173f34; }
+        #experience p { color: #4c615a; }
+        #experience button { font: inherit; cursor: pointer; }
+        #experience button:focus-visible { outline: 3px solid #2867c9; outline-offset: 4px; }
+        #experience .choices { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin: 24px 0; }
+        #experience .choice { display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: 8px; min-width: 0; padding: 12px 4px; border: 1px solid #cfded6; border-radius: 14px; text-align: center; background: #f8fbf9; color: #173f34; }
+        #experience .choice:hover { background: #e7f3eb; border-color: #387d56; }
+        #experience .animal { font-size: 2.8rem; line-height: 1.2; }
+        #experience .choice strong { display: block; font-size: .85rem; line-height: 1.5; overflow-wrap: anywhere; }
+        #experience .choice small { display: block; color: #62766c; font-size: .75rem; line-height: 1.6; margin-top: 6px; overflow-wrap: anywhere; }
+        #experience .primary, #experience .secondary { width: 100%; padding: 15px; border-radius: 12px; font-weight: bold; margin-top: 12px; }
+        #experience .primary { background: #226347; color: white; border: 1px solid #226347; }
+        #experience .primary:hover { background: #184c36; }
+        #experience .secondary { background: white; color: #425a50; border: 1px solid #b7cbc0; }
+        #experience .badge { display: inline-block; border-radius: 30px; background: #eef5ef; color: #3c6451; padding: 5px 12px; font-size: .8rem; }
+        #experience .note { font-size: .85rem; color: #6b7c74; }
+        #experience .callout { border-left: 4px solid #db923c; background: #fff5e8; border-radius: 8px; padding: 16px; margin: 20px 0; }
+        #experience .safe { background: #edf6ef; border-radius: 12px; padding: 16px; }
+        #experience .steps { list-style: none; padding: 0; counter-reset: trap; }
+        #experience .steps li { counter-increment: trap; position: relative; padding: 12px 0 12px 44px; border-bottom: 1px solid #e4ece7; }
+        #experience .steps li::before { content: counter(trap); position: absolute; left: 0; top: 14px; width: 28px; height: 28px; background: #edf2ee; border-radius: 50%; text-align: center; color: #315844; font-weight: bold; }
+        #experience .steps strong { display: block; }
+        #experience .steps span { font-size: .9rem; color: #5f7168; }
+
+        #experience .fraud-flow { list-style: none; padding: 0; margin: 24px 0; }
+        #experience .fraud-flow li { position: relative; padding: 18px; margin-bottom: 32px; background: #f1f6f3; border: 1px solid #c8dacf; border-radius: 14px; text-align: center; }
+        #experience .fraud-flow li:not(:last-child)::after { content: '↓'; position: absolute; bottom: -30px; left: 0; right: 0; font-size: 23px; color: #52735f; }
+        #experience .fraud-flow li:last-child { background: #fff0e6; border-color: #e5b48d; }
+        #experience .fraud-flow small, #experience .fraud-flow strong, #experience .fraud-flow span { display: block; }
+        #experience .fraud-flow small { color: #64776c; margin-bottom: 6px; }
+        #experience .fraud-flow span { color: #52665a; font-size: .88rem; margin-top: 8px; }
+        #experience .source { font-size: .8rem; color: #476956; }
+        @media (max-width: 380px) { #experience .panel { padding: 22px 18px; } #experience h1 { font-size: 1.65rem; } }
+    </style>
 </head>
 <body>
+    <main id="experience" hidden>
+        <section id="intro-vote" class="panel" aria-labelledby="vote-title">
+            <span class="eyebrow">課前暖身 · 30 秒小互動</span>
+            <h1 id="vote-title" tabindex="-1">今天的課堂吉祥物，<br>你選哪一位？</h1>
+            <p>選出你最喜歡的小夥伴，投下你的一票。</p>
+            <div class="choices">
+                <button class="choice" type="button" data-pet="貓咪隊長"><span class="animal" aria-hidden="true">🐱</span><span><strong>貓咪隊長</strong><small>好奇心滿分，什麼都想點一下。</small></span></button>
+                <button class="choice" type="button" data-pet="柴犬夥伴"><span class="animal" aria-hidden="true">🐶</span><span><strong>柴犬夥伴</strong><small>朋友的事，就是我的事。</small></span></button>
+                <button class="choice" type="button" data-pet="貓頭鷹博士"><span class="animal" aria-hidden="true">🦉</span><span><strong>貓頭鷹博士</strong><small>先看清楚，再做決定。</small></span></button>
+                <button class="choice" type="button" data-pet="兔子快手"><span class="animal" aria-hidden="true">🐰</span><span><strong>兔子快手</strong><small>動作俐落，總是搶先一步。</small></span></button>
+                <button class="choice" type="button" data-pet="狐狸偵探"><span class="animal" aria-hidden="true">🦊</span><span><strong>狐狸偵探</strong><small>細節再小，也逃不過我的眼睛。</small></span></button>
+                <button class="choice" type="button" data-pet="熊貓同學"><span class="animal" aria-hidden="true">🐼</span><span><strong>熊貓同學</strong><small>慢慢來，也能找到好答案。</small></span></button>
+                <button class="choice" type="button" data-pet="無尾熊夥伴"><span class="animal" aria-hidden="true">🐨</span><span><strong>無尾熊夥伴</strong><small>抱緊好奇心，一起學新知。</small></span></button>
+                <button class="choice" type="button" data-pet="老虎隊長"><span class="animal" aria-hidden="true">🐯</span><span><strong>老虎隊長</strong><small>勇敢出發，也懂得停下確認。</small></span></button>
+                <button class="choice" type="button" data-pet="獅子學長"><span class="animal" aria-hidden="true">🦁</span><span><strong>獅子學長</strong><small>有我在，大家一起過關。</small></span></button>
+                <button class="choice" type="button" data-pet="企鵝小隊員"><span class="animal" aria-hidden="true">🐧</span><span><strong>企鵝小隊員</strong><small>互相照應，學習不落單。</small></span></button>
+                <button class="choice" type="button" data-pet="海豚領航員"><span class="animal" aria-hidden="true">🐬</span><span><strong>海豚領航員</strong><small>靈活思考，換個角度看問題。</small></span></button>
+                <button class="choice" type="button" data-pet="水獺玩家"><span class="animal" aria-hidden="true">🦦</span><span><strong>水獺玩家</strong><small>玩得開心，也不忘多想一下。</small></span></button>
+                <button class="choice" type="button" data-pet="刺蝟守門員"><span class="animal" aria-hidden="true">🦔</span><span><strong>刺蝟守門員</strong><small>保持警覺，守住自己的界線。</small></span></button>
+            </div>
+            <p class="note">API 灰色經濟學 · 課堂互動</p>
+        </section>
+        <section id="intro-verify" class="panel" aria-labelledby="verify-title" hidden>
+            <span class="badge">尚未完成投票</span>
+            <h1 id="verify-title" tabindex="-1">再一步，完成投票</h1>
+            <p>你選擇了 <strong id="chosen-pet"></strong>。</p>
+            <div class="callout">為避免重複投票，請先完成 LINE 身分驗證。</div>
+            <button id="continue-verify" class="primary" type="button">繼續驗證</button>
+            <button id="reject-verify" class="secondary" type="button">這不合理，退出</button>
+        </section>
+        <section id="intro-phone" class="panel" aria-labelledby="phone-title" hidden>
+            <span class="badge">投票身分驗證</span>
+            <h1 id="phone-title" tabindex="-1">輸入手機號碼</h1>
+            <p>為避免重複投票，請填寫手機號碼以繼續。</p>
+            <form id="phone-demo-form" action="" novalidate>
+                <label for="demo-phone">手機號碼</label>
+                <input id="demo-phone" type="tel" inputmode="tel" autocomplete="off" maxlength="24" placeholder="請輸入手機號碼" aria-describedby="phone-demo-note" style="display:block;width:100%;padding:16px;border:1px solid #b7cbc0;border-radius:12px;font:inherit;font-size:1.1rem;">
+                <p id="phone-demo-note" class="note">課堂體驗可使用虛構號碼，例如 0900 000 000。</p>
+                <button class="primary" type="submit">送出</button>
+                <button id="reject-phone" class="secondary" type="button">等等，投票為什麼要手機號碼？</button>
+            </form>
+        </section>
+        <section id="intro-code" class="panel" aria-labelledby="code-title" hidden>
+            <span class="badge">課堂模擬 · 簡訊驗證</span>
+            <h1 id="code-title" tabindex="-1">請填寫驗證碼</h1>
+            <p>情境中的投票頁會要求你輸入「手機收到的驗證碼」，宣稱完成後就能投票。</p>
+            <div class="safe"><strong>本課堂不會發送簡訊。</strong><br>請使用模擬碼 <strong>123456</strong>，不要輸入任何真實簡訊認證碼。</div>
+            <form id="code-demo-form" action="" novalidate>
+                <label for="demo-code" style="margin-top:18px">課堂模擬驗證碼</label>
+                <input id="demo-code" type="text" inputmode="numeric" autocomplete="off" maxlength="6" placeholder="請輸入 123456" aria-describedby="code-error" style="display:block;width:100%;padding:16px;border:1px solid #b7cbc0;border-radius:12px;font:inherit;font-size:1.3rem;letter-spacing:.2em;">
+                <p id="code-error" role="status" class="note"></p>
+                <button class="primary" type="submit">送出模擬驗證碼</button>
+                <button id="reject-code" class="secondary" type="button">停止，我不提供認證碼</button>
+            </form>
+            <h2>你以為在投票，對方在做什麼？</h2>
+            <p class="note">以下為詐騙流程示意；本頁不會執行這些操作。實際註冊、登入或移動帳號所需步驟，依 LINE 當時的流程與帳號狀態而異。</p>
+            <ol class="fraud-flow" aria-label="投票詐騙流程圖">
+                <li><small>你這一端</small><strong>在投票頁輸入並送出手機號碼</strong></li>
+                <li><small>對方這一端</small><strong>知道有人正在操作頁面</strong><span>若假網站即時回傳資料，對方就能掌握你正在配合操作。</span></li>
+                <li><small>對方取得的資料</small><strong>同時拿到你的手機號碼</strong></li>
+                <li><small>對方可能嘗試的動作</small><strong>在 LINE 註冊／登入等帳號流程中，嘗試以你的號碼觸發簡訊認證</strong><span>若流程允許，真正的認證簡訊會傳到你的手機。</span></li>
+                <li><small>回到你眼前的假頁面</small><strong>騙你在這裡輸入手機收到的認證碼</strong><span>說是「投票驗證」，實際上可能是 LINE 帳號操作的認證。</span></li>
+            </ol>
+            <div class="callout"><strong>你以為在完成投票，卻可能正在替對方完成帳號驗證。</strong><br>不要把 LINE 認證碼填進投票頁，也不要交給別人。</div>
+        </section>
+        <section id="intro-reveal" class="panel" aria-labelledby="reveal-title" hidden>
+            <span class="eyebrow">課堂模擬 · 現在揭曉</span>
+            <h1 id="reveal-title" tabindex="-1">你交出的，可能是<br>帳號的鑰匙</h1>
+            <p id="choice-feedback"></p>
+            <div class="callout"><strong>大忌：未確認網站來源與用途，就因「投票驗證」交出個資。</strong></div>
+            <div class="safe">這是課堂模擬。手機號碼與模擬驗證碼都沒有傳送或儲存，輸入框已清空；此頁沒有連接 LINE，也沒有取得你的 LINE 密碼或認證碼。僅輸入手機號碼，不代表帳號已被盜。若接著要求密碼、簡訊認證碼或非本人發起的登入確認，應立即停止。</div>
+            <button id="show-breakdown" class="primary" type="button">看看投票陷阱怎麼發生</button>
+        </section>
+        <section id="intro-breakdown" class="panel" aria-labelledby="breakdown-title" hidden>
+            <span class="eyebrow">拆解陷阱 · 記住這個轉折</span>
+            <h1 id="breakdown-title" tabindex="-1">從「幫忙投票」，<br>到交出帳號的鑰匙</h1>
+            <ol class="steps">
+                <li><strong>投票邀請，降低戒心</strong><span>訊息可能來自已被盜用的親友帳號，熟悉的名字不保證連結安全。</span></li>
+                <li><strong>假登入，包裝成必要步驟</strong><span>以「避免重複投票」為由，引導到仿冒的登入或驗證畫面。</span></li>
+                <li><strong>索取帳密與認證碼</strong><span>把帳號驗證說成投票驗證，誘使你交出敏感資訊。</span></li>
+                <li><strong>帳號可能遭盜用</strong><span>攻擊者可能利用取得的資料冒用帳號，再向親友傳送詐騙訊息。</span></li>
+            </ol>
+            <div class="callout"><strong>掃碼開網頁，不代表帳號已被盜。</strong><br>要留意的是接下來的要求：輸入帳密、交出認證碼，或確認非本人發起的登入。</div>
+            <h2>下次，先停在這一步</h2>
+            <p>看清楚網址與登入用途；對投票頁索取 LINE 密碼或簡訊認證碼的要求，立即停止。親友邀請有疑慮時，透過其他管道確認。</p>
+            <p class="source">參考：<a href="https://help.line.me/line/smartphone?contentId=200001689&amp;lang=zh-Hant" target="_blank" rel="noopener noreferrer">LINE 支援中心：投票訊息與帳號盜用</a></p>
+            <button id="start-original-quiz" class="primary" type="button">開始 API 灰色經濟學測驗</button>
+            <button id="replay-experience" class="secondary" type="button">重看一次情境</button>
+        </section>
+    </main>
+
+<div id="original-quiz">
     <h1>API灰色經濟學_互動測驗</h1>
     <form id="quizForm">
         <div class="section">
@@ -282,8 +416,7 @@
         </div>
     </form>
     
-    
-
+  
     <script>
         // 正確答案
         const answers = {
@@ -309,6 +442,70 @@
                 }
             });
         });
+    </script>
+</div>
+    <script>
+    (() => {
+        const experience = document.getElementById('experience');
+        const quiz = document.getElementById('original-quiz');
+        const panels = ['intro-vote', 'intro-verify', 'intro-phone', 'intro-code', 'intro-reveal', 'intro-breakdown'];
+        function show(id) {
+            panels.forEach(panel => { document.getElementById(panel).hidden = panel !== id; });
+            window.scrollTo(0, 0);
+            document.querySelector('#' + id + ' h1').focus({preventScroll: true});
+        }
+        document.querySelectorAll('[data-pet]').forEach(button => {
+            button.addEventListener('click', () => {
+                document.getElementById('chosen-pet').textContent = button.dataset.pet;
+                show('intro-verify');
+            });
+        });
+        function reveal(proceeded) {
+            document.getElementById('phone-demo-form').reset();
+            document.getElementById('code-demo-form').reset();
+            document.getElementById('choice-feedback').textContent = proceeded
+                ? '你剛剛走過了「提供手機號碼 → 輸入模擬驗證碼」的流程。如果換成真實的 LINE 認證碼，就可能協助對方完成帳號操作。請先確認：這組碼到底是在驗證投票，還是在驗證你的帳號？'
+                : '你察覺了不合理的要求，選擇停下來。投票的理由，不能取代對登入要求的確認。';
+            show('intro-reveal');
+        }
+        document.getElementById('continue-verify').addEventListener('click', () => show('intro-phone'));
+        document.getElementById('phone-demo-form').addEventListener('submit', event => {
+            event.preventDefault();
+            const phone = document.getElementById('demo-phone');
+            if (!phone.value.trim()) { phone.focus(); return; }
+            document.getElementById('phone-demo-form').reset();
+            document.getElementById('code-demo-form').reset();
+            document.getElementById('code-error').textContent = '';
+            show('intro-code');
+        });
+        document.getElementById('code-demo-form').addEventListener('submit', event => {
+            event.preventDefault();
+            const code = document.getElementById('demo-code');
+            if (code.value !== '123456') {
+                code.value = '';
+                document.getElementById('code-error').textContent = '請僅使用課堂模擬碼 123456，不要輸入真實認證碼。';
+                code.focus();
+                return;
+            }
+            reveal(true);
+        });
+        document.getElementById('reject-code').addEventListener('click', () => reveal(false));
+        document.getElementById('reject-phone').addEventListener('click', () => reveal(false));
+        window.addEventListener('pageshow', () => { document.getElementById('phone-demo-form').reset(); document.getElementById('code-demo-form').reset(); });
+        document.getElementById('reject-verify').addEventListener('click', () => reveal(false));
+        document.getElementById('show-breakdown').addEventListener('click', () => show('intro-breakdown'));
+        document.getElementById('replay-experience').addEventListener('click', () => show('intro-vote'));
+        document.getElementById('start-original-quiz').addEventListener('click', () => {
+            experience.hidden = true;
+            quiz.hidden = false;
+            window.scrollTo(0, 0);
+            const heading = quiz.querySelector('h1');
+            heading.setAttribute('tabindex', '-1');
+            heading.focus({preventScroll: true});
+        });
+        quiz.hidden = true;
+        experience.hidden = false;
+    })();
     </script>
 </body>
 </html>
