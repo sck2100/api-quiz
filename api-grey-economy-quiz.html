@@ -168,12 +168,19 @@
         #experience .fraud-flow small, #experience .fraud-flow strong, #experience .fraud-flow span { display: block; }
         #experience .fraud-flow small { color: #64776c; margin-bottom: 6px; }
         #experience .fraud-flow span { color: #52665a; font-size: .88rem; margin-top: 8px; }
+        #code-warning-dialog::backdrop { background: rgba(25, 0, 5, .65); }
         #experience .source { font-size: .8rem; color: #476956; }
         @media (max-width: 380px) { #experience .panel { padding: 22px 18px; } #experience h1 { font-size: 1.65rem; } }
     </style>
 </head>
 <body>
     <main id="experience" hidden>
+        <dialog id="code-warning-dialog" aria-labelledby="code-warning-title" aria-describedby="code-warning-description" style="width:min(420px,calc(100% - 32px));border:3px solid #a00016;border-radius:18px;padding:26px 20px;background:#fff3f3;box-sizing:border-box;">
+            <h2 id="code-warning-title" style="color:#a00016;font-size:clamp(1.7rem,7vw,2.3rem);line-height:1.4;text-align:center;margin:0;">已送出妳的驗證碼給壞人了</h2>
+            <p id="code-warning-description" style="color:#6e1824;text-align:center;">課堂模擬，未實際傳送任何資料。</p>
+            <button id="cancel-code-warning" type="button" class="secondary" autofocus>取消</button>
+        </dialog>
+
         <section id="intro-vote" class="panel" aria-labelledby="vote-title">
             <span class="eyebrow">課前暖身 · 30 秒小互動</span>
             <h1 id="vote-title" tabindex="-1">今天的課堂吉祥物，<br>你選哪一位？</h1>
@@ -210,8 +217,9 @@
             <p>為避免重複投票，請填寫手機號碼以繼續。</p>
             <form id="phone-demo-form" action="" novalidate>
                 <label for="demo-phone">手機號碼</label>
-                <input id="demo-phone" type="tel" inputmode="tel" autocomplete="off" maxlength="24" placeholder="請輸入手機號碼" aria-describedby="phone-demo-note" style="display:block;width:100%;padding:16px;border:1px solid #b7cbc0;border-radius:12px;font:inherit;font-size:1.1rem;">
-                <p id="phone-demo-note" class="note">課堂體驗可使用虛構號碼，例如 0900 000 000。</p>
+                <input id="demo-phone" type="tel" inputmode="numeric" autocomplete="off" minlength="10" maxlength="10" pattern="[0-9]{10}" placeholder="請輸入手機號碼" aria-describedby="phone-demo-note phone-error" style="display:block;width:100%;padding:16px;border:1px solid #b7cbc0;border-radius:12px;font:inherit;font-size:1.1rem;">
+                <p id="phone-demo-note" class="note">請輸入 10 位數字。課堂體驗可使用虛構號碼，例如 0900000000。</p>
+                <p id="phone-error" role="status" style="color:#a00016;"></p>
                 <button class="primary" type="submit">送出</button>
                 <button id="reject-phone" class="secondary" type="button">等等，投票為什麼要手機號碼？</button>
             </form>
@@ -242,14 +250,6 @@
                 <li><small>回到你眼前的假頁面</small><strong>騙你在這裡輸入手機收到的認證碼</strong><span>說是「投票驗證」，實際上可能是 LINE 帳號操作的認證。</span></li>
             </ol>
             <div class="callout"><strong>你以為在完成投票，卻可能正在替對方完成帳號驗證。</strong><br>不要把 LINE 認證碼填進投票頁，也不要交給別人。</div>
-        </section>
-        <section id="intro-reveal" class="panel" aria-labelledby="reveal-title" hidden>
-            <span class="eyebrow">課堂模擬 · 現在揭曉</span>
-            <h1 id="reveal-title" tabindex="-1">你交出的，可能是<br>帳號的鑰匙</h1>
-            <p id="choice-feedback"></p>
-            <div class="callout"><strong>大忌：未確認網站來源與用途，就因「投票驗證」交出個資。</strong></div>
-            <div class="safe">這是課堂模擬。手機號碼與模擬驗證碼都沒有傳送或儲存，輸入框已清空；此頁沒有連接 LINE，也沒有取得你的 LINE 密碼或認證碼。僅輸入手機號碼，不代表帳號已被盜。若接著要求密碼、簡訊認證碼或非本人發起的登入確認，應立即停止。</div>
-            <button id="show-breakdown" class="primary" type="button">看看投票陷阱怎麼發生</button>
         </section>
         <section id="intro-breakdown" class="panel" aria-labelledby="breakdown-title" hidden>
             <span class="eyebrow">拆解陷阱 · 記住這個轉折</span>
@@ -453,7 +453,7 @@
     (() => {
         const experience = document.getElementById('experience');
         const quiz = document.getElementById('original-quiz');
-        const panels = ['intro-vote', 'intro-verify', 'intro-phone', 'intro-code', 'intro-reveal', 'intro-breakdown'];
+        const panels = ['intro-vote', 'intro-verify', 'intro-phone', 'intro-code', 'intro-breakdown'];
         function show(id) {
             panels.forEach(panel => { document.getElementById(panel).hidden = panel !== id; });
             window.scrollTo(0, 0);
@@ -465,19 +465,25 @@
                 show('intro-verify');
             });
         });
-        function reveal(proceeded) {
+        function reveal() {
             document.getElementById('phone-demo-form').reset();
             document.getElementById('code-demo-form').reset();
-            document.getElementById('choice-feedback').textContent = proceeded
-                ? '你剛剛走過了「提供手機號碼 → 輸入模擬驗證碼」的流程。如果換成真實的 LINE 認證碼，就可能協助對方完成帳號操作。請先確認：這組碼到底是在驗證投票，還是在驗證你的帳號？'
-                : '你察覺了不合理的要求，選擇停下來。投票的理由，不能取代對登入要求的確認。';
-            show('intro-reveal');
+            show('intro-breakdown');
         }
         document.getElementById('continue-verify').addEventListener('click', () => show('intro-phone'));
+        document.getElementById('demo-phone').addEventListener('input', event => {
+            event.target.value = event.target.value.replace(/[^0-9]/g, '').slice(0, 10);
+            document.getElementById('phone-error').textContent = '';
+        });
         document.getElementById('phone-demo-form').addEventListener('submit', event => {
             event.preventDefault();
             const phone = document.getElementById('demo-phone');
-            if (!phone.value.trim()) { phone.focus(); return; }
+            if (!/^[0-9]{10}$/.test(phone.value)) {
+                document.getElementById('phone-error').textContent = '請輸入完整的 10 位數字手機號碼。';
+                phone.focus();
+                return;
+            }
+            document.getElementById('phone-error').textContent = '';
             document.getElementById('phone-demo-form').reset();
             document.getElementById('code-demo-form').reset();
             document.getElementById('code-error').textContent = '';
@@ -486,19 +492,20 @@
         document.getElementById('code-demo-form').addEventListener('submit', event => {
             event.preventDefault();
             const code = document.getElementById('demo-code');
-            if (code.value !== '123456') {
-                code.value = '';
-                document.getElementById('code-error').textContent = '請僅使用課堂模擬碼 123456，不要輸入真實認證碼。';
+            if (!code.value.trim()) {
+                document.getElementById('code-error').textContent = '請先填入模擬驗證碼，例如 123456。';
                 code.focus();
                 return;
             }
-            reveal(true);
+            document.getElementById('code-warning-dialog').showModal();
+        });
+        document.getElementById('cancel-code-warning').addEventListener('click', () => {
+            document.getElementById('code-warning-dialog').close();
         });
         document.getElementById('reject-code').addEventListener('click', () => reveal(false));
         document.getElementById('reject-phone').addEventListener('click', () => reveal(false));
         window.addEventListener('pageshow', () => { document.getElementById('phone-demo-form').reset(); document.getElementById('code-demo-form').reset(); });
         document.getElementById('reject-verify').addEventListener('click', () => reveal(false));
-        document.getElementById('show-breakdown').addEventListener('click', () => show('intro-breakdown'));
         document.getElementById('replay-experience').addEventListener('click', () => show('intro-vote'));
         document.getElementById('start-original-quiz').addEventListener('click', () => {
             experience.hidden = true;
